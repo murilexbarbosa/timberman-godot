@@ -47,6 +47,7 @@ centered = false
 
 [node name="Felpudo" type="Node2D" parent="."]
 
+editor/display_folded = true
 transform/pos = Vector2( 220, 1070 )
 script/script = ExtResource( 3 )
 
@@ -99,5 +100,9 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
+
+[node name="Barris" type="Node2D" parent="."]
+
+[node name="DestBarris" type="Node2D" parent="."]
 
 
