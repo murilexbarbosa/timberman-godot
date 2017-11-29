@@ -49,6 +49,7 @@ centered = false
 
 editor/display_folded = true
 transform/pos = Vector2( 220, 1070 )
+z/z = 1
 script/script = ExtResource( 3 )
 
 [node name="Idle" type="Sprite" parent="Felpudo"]
