@@ -8,18 +8,28 @@ onready var felpudo = get_node("Felpudo")
 onready var camera = get_node("Camera")
 onready var barris = get_node("Barris")
 onready var destbarris = get_node("DestBarris")
+onready var barra = get_node("Barra")
+onready var labelPontos = get_node("Control/Pontos")
 
+var pontos = 0
 var ultini
+
+var estado
+
+const JOGANDO = 1
+const PERDEU = 2
 
 func _ready():
 	randomize()
 	set_process_input(true)
-	
+	estado = JOGANDO
 	gerarIni()
+	
+	barra.connect("perdeu", self, "perder")
 	
 func _input(event):
 	event = camera.make_input_local(event)
-	if event.type == InputEvent.SCREEN_TOUCH and event.pressed:
+	if event.type == InputEvent.SCREEN_TOUCH and event.pressed and estado == JOGANDO:
 		if event.pos.x < 360:
 			felpudo.esq()
 		else:
@@ -34,6 +44,12 @@ func _input(event):
 			aleaBarril(Vector2(360, 1090-10*172))
 			
 			descer()
+			
+			barra.add(0.014)
+			pontos += 1
+			
+			labelPontos.set_text(str(pontos))
+			
 			if verif():
 				perder()
 		else:
@@ -57,7 +73,7 @@ func gerarBarril(tipo, pos):
 	elif tipo == 2:
 		novo = barrilDir.instance()
 		novo.add_to_group("barrilDir")
-		ultini = false
+		ultini = true
 	
 	novo.set_pos(pos)
 	barris.add_child(novo)
@@ -84,3 +100,9 @@ func descer():
 
 func perder():
 	felpudo.morrer()
+	estado = PERDEU
+	barra.set_process(false)
+	get_node("Timer").start()
+
+func _on_Timer_timeout():
+	get_tree().reload_current_scene()

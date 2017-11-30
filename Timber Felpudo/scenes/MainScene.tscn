@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://assets/img_fundoChao.png" type="Texture" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://assets/felpudoIdle.png" type="Texture" id=4]
 [ext_resource path="res://assets/felpudoBate.png" type="Texture" id=5]
 [ext_resource path="res://assets/grave.png" type="Texture" id=6]
+[ext_resource path="res://scripts/Barra.gd" type="Script" id=7]
+[ext_resource path="res://assets/barra_recipiente.png" type="Texture" id=8]
+[ext_resource path="res://assets/barra.png" type="Texture" id=9]
+[ext_resource path="res://assets/font140.fnt" type="BitmapFont" id=10]
 
 [sub_resource type="Animation" id=1]
 
@@ -105,5 +109,58 @@ drag_margin/bottom = 0.2
 [node name="Barris" type="Node2D" parent="."]
 
 [node name="DestBarris" type="Node2D" parent="."]
+
+[node name="Barra" type="Node2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( 360, 100 )
+transform/scale = Vector2( 2, 2 )
+script/script = ExtResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="Barra"]
+
+texture = ExtResource( 8 )
+
+[node name="Marcador" type="Sprite" parent="Barra"]
+
+texture = ExtResource( 9 )
+region = true
+region_rect = Rect2( 0, 0, 188, 23 )
+
+[node name="Control" type="CanvasLayer" parent="."]
+
+editor/display_folded = true
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="Pontos" type="Label" parent="Control"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 9.0
+margin/top = 127.0
+margin/right = 717.0
+margin/bottom = 278.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color = Color( 0.902344, 0.845947, 0, 1 )
+custom_constants/shadow_offset_x = 3
+text = "0"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = false
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 
